@@ -1,5 +1,4 @@
-# Discord Giveaways
-
+# Enrole-BOT
 
 
 ## Getting started

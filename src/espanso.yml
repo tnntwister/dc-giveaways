@@ -1,0 +1,25 @@
+matches:
+  - trigger: /ping
+    replace: Example response for /ping
+  - trigger: /prompt-push my lord, please create a entry in the yaml file !
+    replace: >-
+      Example response for /prompt-push my lord, please create a entry in the
+      yaml file !
+  - trigger: anewprompt
+    replace: something brilliant to ask about GPT
+  - trigger: hoho
+    replace: |-
+      demande à mon GPT de me générer la liste des cadeaux de noël
+      pour ma fille
+      pour ma femme
+      pour mes parents
+  - trigger: youpi
+    replace: youpi tralala
+  - trigger: samechannel
+    replace: |-
+      youpi
+      tra la la
+  - trigger: fromanotherchannel
+    replace: |-
+      youpi
+      tra la la
