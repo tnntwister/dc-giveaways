@@ -12,7 +12,7 @@ module.exports = {
             option.setName('url')
                 .setDescription('URL of the discord message to send')
                 .setRequired(true)),
-	async execute(interaction, client) {
+	async execute(interaction) {
         const urlparts = interaction.options.getString('url').split('/');
         const messageId = urlparts[urlparts.length - 1];
         const channelId = urlparts[urlparts.length - 2];
