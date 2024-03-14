@@ -1,7 +1,7 @@
 const appWriteConfig = require('../config/appwrite.js');
 const { generateDocumentId, generateMemberId } = require('../helpers/ids');
 const sdk = require('node-appwrite');
-const { AppwriteException } = require('node-appwrite');
+const { AppwriteException, Query } = require('node-appwrite');
 const appWriteClient = new sdk.Client();
 const databases = new sdk.Databases(appWriteClient);
 
@@ -15,40 +15,32 @@ class Giveaway {
     constructor(guildId, slug, summary  = '') {
        this.guildId = guildId;
        this.$id = null;
-       this.slug = '';
-       this.summary = '';
+       this.slug = slug;
+       this.summary = summary;
        this.now = '';
        this.winnerId = '';
        this.members = [];
 
       // on essaie de récupérer le giveaway depuis la base de données
-      this.retrieve(guildId, slug, summary);      
+      // return this.retrieve(guildId, slug, summary);      
     }
     
-    async create(guildId, slug, summary  = '') {
-        if (this.$id === null) {
-            throw new Error('ID is null');
-        }
-
-        this.guildId = guildId;
-        this.slug = slug;
-        this.summary = summary;
-        
+    async create() {
+       
         const newGiveaway = {
-            guildId: guildId,
-            slug: slug,
-            summary: summary
+            guildId: this.guildId,
+            slug: this.slug,
+            summary: this.summary
         };
         
         try {
-          console.log('create', appWriteConfig.databaseId, appWriteConfig.giveawayCollection, newGiveaway);
-          const promise = await databases.createDocument(
+          const document = await databases.createDocument(
             appWriteConfig.databaseId, 
             appWriteConfig.giveawayCollection, 
             generateDocumentId(), 
             newGiveaway
           );
-          return promise.$id;
+          return document;
 
         } catch (error) {
           if (error instanceof AppwriteException) {
@@ -60,23 +52,28 @@ class Giveaway {
         }
     }
 
-    async retrieve(guildId, slug, summary) {
-      console.log('retrieve', appWriteConfig.databaseId, appWriteConfig.giveawayCollection, id);
+    async retrieve() {
       const filters = [
-        'guildId==' + guildId,
-        'slug==' + slug 
+        Query.equal('guildId', this.guildId.toString()),
+        Query.equal('slug', this.slug)
       ];
-
+    
         try {
-          const giveaways = await databases.listDocuments(appWriteConfig.databaseId, appWriteConfig.giveawayCollection, filters);
+          const giveaways = await databases.listDocuments(
+            appWriteConfig.databaseId, 
+            appWriteConfig.giveawayCollection, 
+            filters);
           if (giveaways.total > 0) {
             this.$id = giveaways.documents[0].$id;
             this.guildId = giveaways.documents[0].guildId;
             this.slug = giveaways.documents[0].slug;
             this.summary = giveaways.documents[0].summary;
             this.now = giveaways.documents[0].now;
-            this.lastWinner = giveaways.documents[0].winner
+            this.lastWinner = giveaways.documents[0].winnerId
+          } else {
+            this.$id = await this.create();
           }
+          return this;
         } catch (error) {
           if (error instanceof AppwriteException) {
             // throw an error with the AppwriteException message
@@ -140,6 +137,24 @@ class Giveaway {
           }
         }
       }
+
+    async destroy() {
+      console.log('destroy', this.$id);
+      try {
+        await databases.deleteDocument(
+          appWriteConfig.databaseId, 
+          appWriteConfig.giveawayCollection, 
+          this.$id);
+      }
+      catch (error) {
+        if (error instanceof AppwriteException) {
+          // throw an error with the AppwriteException message
+          throw new Error("Impossible de supprimer le giveaway, peut-être qu'il n'existe pas.");
+        } else {
+          throw error;
+        }
+      }
+    }  
   
     async retrieveMembers(db = true) {
       // return the list of members from appwrite
@@ -171,6 +186,9 @@ class Giveaway {
 
     async pickWinner() {  
       const members = await this.retrieveMembers();
+      if (members.length === 0) {
+        throw new GiveawayMemberNotFoundError();
+      }
       const membersId = members.map(member => member.memberId);
       // pick a random winner
       const winnerId = membersId[Math.floor(Math.random() * membersId.length)];
