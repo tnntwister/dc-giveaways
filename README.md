@@ -2,7 +2,7 @@
 
 Code for a small bot to manage giveaways.
 
-## available commands
+## Available commands
 
 you can manage giveaways with custom commands : 
 
@@ -10,6 +10,6 @@ you can manage giveaways with custom commands :
 - **giveaway** : launch a giveaway roll
 - **lastGiveaway** : recall the last winner for a giveaway
 
-## how to install it in your discord server
+## How to install it in your discord server
 
 **wip**

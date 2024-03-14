@@ -32,22 +32,30 @@ class Giveaway {
         if (this.$id === null) {
             throw new Error('ID is null');
         }
+
+        this.guildId = guildId;
+        this.slug = slug;
+        this.summary = summary;
+        
         const newGiveaway = {
-            guildId: this.guildId,
-            slug: this.slug,
-            summary: this.summary,
-            now: this.now,
-            lastWinner: this.winnerId,
-            members: this.members
+            guildId: guildId,
+            slug: slug,
+            summary: summary
         };
         
         try {
-          const promise = await databases.createDocument(appWriteConfig.databaseId, appWriteConfig.giveawayCollection, this.$id, newGiveaway);
+          const promise = await databases.createDocument(
+            appWriteConfig.databaseId, 
+            appWriteConfig.giveawayCollection, 
+            generateDocumentId(), 
+            newGiveaway
+          );
           return promise.$id;
 
         } catch (error) {
-          if (error instanceof AppwriteException && error.message === 'Document with the requested ID could not be found.') {
-            // Gérez l'erreur ici
+          if (error instanceof AppwriteException) {
+            // throw an error with the AppwriteException message
+            throw new Error(error.message);
           } else {
             throw error;
           }
@@ -62,11 +70,11 @@ class Giveaway {
           this.slug = giveaway.slug;
           this.summary = giveaway.summary;
           this.now = giveaway.now;
-          this.lastWinner = giveaway.winner;
-          this.members = giveaway.members;
+          this.lastWinner = giveaway.winner
         } catch (error) {
-          if (error instanceof AppwriteException && error.message === 'Document with the requested ID could not be found.') {
-            // Gérez l'erreur ici
+          if (error instanceof AppwriteException) {
+            // throw an error with the AppwriteException message
+            throw new Error(error.message);
           } else {
             throw error;
           }
@@ -79,14 +87,14 @@ class Giveaway {
           slug: this.slug,
           summary: this.summary,
           now: this.now,
-          winner: this.lastWinner,
-          members: this.members
+          winner: this.lastWinner
         };
         try {
           return await databases.updateDocument(appWriteConfig.databaseId, appWriteConfig.giveawayCollection, this.$id, updatedGiveaway);
         } catch (error) {
-          if (error instanceof AppwriteException && error.message === 'Document with the requested ID could not be found.') {
-            // Gérez l'erreur ici
+          if (error instanceof AppwriteException) {
+            // throw an error with the AppwriteException message
+            throw new Error(error.message);
           } else {
             throw error;
           }
@@ -118,31 +126,56 @@ class Giveaway {
         try {
           return await databases.updateDocument(appWriteConfig.databaseId, appWriteConfig.giveawayCollection, this.$id, updatedGiveaway);
         } catch (error) {
-          if (error instanceof AppwriteException && error.message === 'Document with the requested ID could not be found.') {
-            // Gérez l'erreur ici
+          if (error instanceof AppwriteException) {
+            // throw an error with the AppwriteException message
+            throw new Error(error.message);
           } else {
             throw error;
           }
         }
       }
   
-    addPC(memberId) {
-      this.members.push(memberId);
+    async retrieveMembers(db = true) {
+      // return the list of members from appwrite
+      if (db) {
+        this.members = await databases.listDocuments(appWriteConfig.databaseId, appWriteConfig.giveawayMemberCollection, ['giveawayId==' + this.$id]);
+        return this.members;  
+      } else {
+        return this.members;
+      }      
     }
 
-    defineMC(memberId) {
-        if (!this.members.includes(memberId)) {
-            this.members.push(memberId);
-        }
-        this.lastWinner = memberId;
-    }   
-  
-    removeMember(memberId) {      
-      this.members = this.members.filter(id => id !== memberId);
-      // if the member was the winner, the first member in the list becomes the winner
-        if (this.lastWinner === memberId) {
-            this.lastWinner = this.members[0];
-        }
+    /**
+     * 
+     * @param {*} memberList | Array of member ids
+     */
+    async addMembers(memberList) {
+      const members = [];
+      for (let i = 0; i < memberList.length; i++) {
+        members.push({
+          giveawayId: this.$id,
+          memberId: memberList[i],
+        });
+      }
+      await databases.createDocuments(appWriteConfig.databaseId, appWriteConfig.giveawayMemberCollection, members);
+    }
+
+    async pickWinner() {  
+      const members = await this.retrieveMembers();
+      const membersId = members.map(member => member.memberId);
+      // pick a random winner
+      const winnerId = membersId[Math.floor(Math.random() * membersId.length)];
+
+      // write information in the database
+      const member = new GiveawayMember(this.$id, winnerId);
+      member.setWin(members.find(member => member.memberId === winnerId).$id);
+
+      // save information in giveaway
+      this.lastWinner = winnerId;
+      this.setNow('Le gagnant est ' + winnerId);
+      this.save();
+
+      return winnerId;
     }
 
     setName(slug) {
@@ -197,6 +230,9 @@ class Giveaway {
      * @returns 
      */
     async create(giveawayId, memberId) {
+      this.giveawayId = giveawayId;
+      this.memberId = memberId;
+
       const newMember = {
         memberId: memberId,
         win: 0,
