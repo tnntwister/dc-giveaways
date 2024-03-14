@@ -5,5 +5,6 @@ module.exports = {
     projectId: process.env.APPWRITE_PROJECT_ID,
     apiKey: process.env.APPWRITE_SECRET,
     databaseId: process.env.APPWRITE_DATABASE,
-    gangCollection: process.env.GANG_COLLECTION
+    giveawayCollection: process.env.GIVEAWAY_COLLECTION,
+    membersCollection: process.env.MEMBERS_COLLECTION
 };
