@@ -12,7 +12,7 @@ appWriteClient
 
 
 class Giveaway {
-    constructor(guildId, id = null) {
+    constructor(guildId, slug, summary  = '') {
        this.guildId = guildId;
        this.$id = null;
        this.slug = '';
@@ -21,11 +21,8 @@ class Giveaway {
        this.winnerId = '';
        this.members = [];
 
-      // if id is null, it means the giveaway is not yet created
-      if (id === null) {
-        this.$id = generateDocumentId();      
-      } 
-      this.create()
+      // on essaie de récupérer le giveaway depuis la base de données
+      this.retrieve(guildId, slug, summary);      
     }
     
     async create(guildId, slug, summary  = '') {
@@ -44,6 +41,7 @@ class Giveaway {
         };
         
         try {
+          console.log('create', appWriteConfig.databaseId, appWriteConfig.giveawayCollection, newGiveaway);
           const promise = await databases.createDocument(
             appWriteConfig.databaseId, 
             appWriteConfig.giveawayCollection, 
@@ -62,15 +60,23 @@ class Giveaway {
         }
     }
 
-    async retrieve(id) {
+    async retrieve(guildId, slug, summary) {
+      console.log('retrieve', appWriteConfig.databaseId, appWriteConfig.giveawayCollection, id);
+      const filters = [
+        'guildId==' + guildId,
+        'slug==' + slug 
+      ];
+
         try {
-          const giveaway = await databases.getDocument(appWriteConfig.databaseId, appWriteConfig.giveawayCollection, id);
-          this.$id = giveaway.$id;
-          this.guildId = giveaway.guildId;
-          this.slug = giveaway.slug;
-          this.summary = giveaway.summary;
-          this.now = giveaway.now;
-          this.lastWinner = giveaway.winner
+          const giveaways = await databases.listDocuments(appWriteConfig.databaseId, appWriteConfig.giveawayCollection, filters);
+          if (giveaways.total > 0) {
+            this.$id = giveaways.documents[0].$id;
+            this.guildId = giveaways.documents[0].guildId;
+            this.slug = giveaways.documents[0].slug;
+            this.summary = giveaways.documents[0].summary;
+            this.now = giveaways.documents[0].now;
+            this.lastWinner = giveaways.documents[0].winner
+          }
         } catch (error) {
           if (error instanceof AppwriteException) {
             // throw an error with the AppwriteException message
@@ -138,8 +144,11 @@ class Giveaway {
     async retrieveMembers(db = true) {
       // return the list of members from appwrite
       if (db) {
-        this.members = await databases.listDocuments(appWriteConfig.databaseId, appWriteConfig.giveawayMemberCollection, ['giveawayId==' + this.$id]);
-        return this.members;  
+        const membersList = await databases.listDocuments(appWriteConfig.databaseId, appWriteConfig.giveawayMemberCollection, ['giveawayId==' + this.$id]);
+        if (membersList.total === 0) {
+          this.members = membersList.documents;
+          return this.members;
+        }        
       } else {
         return this.members;
       }      

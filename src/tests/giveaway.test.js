@@ -1,5 +1,6 @@
 const Giveaway = require('../models/giveaway.js');
 
+
 describe('Giveaway class', () => {
   let giveaway;
   const guildId = '1205061903601369118';
@@ -9,7 +10,7 @@ describe('Giveaway class', () => {
   });*/
 
   test('should create a giveway', () => {
-    giveaway = new Giveway(guildId, slug, summary = '');
+    giveaway = new Giveaway(guildId, "premier-giveway", summary = 'Mon premier giveway');
     expect(giveaway.guildId).toBe(guildId);
     expect(giveaway.$id).not.toBeNull();
     expect(giveaway.slug).toBe(slug);
