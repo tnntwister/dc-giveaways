@@ -10,7 +10,7 @@ appWriteClient
 ;
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
-require('../../models/gangs.js');
+require('../../models/giveaway.js');
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -1,5 +1,5 @@
 const Giveaway = require('../models/giveaway.js');
-
+const { generateDocumentId, generateMemberId } = require('../helpers/ids');
 
 describe('Giveaway class', () => {
   let giveaway;
@@ -11,14 +11,14 @@ describe('Giveaway class', () => {
 
   test('should create a giveway', async () => {
     giveaway = new Giveaway(guildId, "premier-giveway", 'Mon premier giveway');
-    const document = await giveaway.retrieve();      
+    await giveaway.retrieve();      
     expect(giveaway.guildId).toBe(guildId);
     expect(giveaway.$id).not.toBeNull();
     expect(giveaway.slug).toBe("premier-giveway");
-    expect(giveaway.summary).toBe('Mon premier giveway');
-    giveaway.destroy();
+    expect(giveaway.summary).toBe('Mon premier giveway');    
+    await giveaway.destroy();
   });
-
+/*
   test('should update a giveway', async () => {
     giveaway = new Giveaway(guildId, "premier-giveway", 'Mon premier giveway');
     await giveaway.retrieve();    
@@ -26,52 +26,45 @@ describe('Giveaway class', () => {
     // on change les valeurs
     giveaway.setSummary('Mon premier giveway updated');
     giveaway.setNow('Now is 10h');
-    console.log(giveaway);
-    return ;
     await giveaway.save();
 
     expect(giveaway.slug).toBe("premier-giveway");
     expect(giveaway.summary).toBe('Mon premier giveway updated');
     expect(giveaway.now).toBe('Now is 10h');
-    console.log(giveaway);
-    return ;
-    try {
-      // await giveaway.destroy();
-    }
-    catch (e) {
-      console.log(e);
-    }
-  });  
-  /*
-  test('should sync data with appwrite', async () => {
-    giveaway = new Giveaway(guildId);
-    await giveaway.create();
-    giveaway.setName('My precious giveaway');
-    giveaway.defineMC('328932220830220289');
-    giveaway.setSummary('Summary of the giveaway');
-    giveaway.setNow('Now is 10h');
-    await giveaway.save();          
-  });
+    await giveaway.destroy();
+  });  */
 
-  test('should retrieve data with id and update', async () => {
-    const documentId = '43f0ecdf40354a9f9d1cf82744da498e';    
-    giveaway = new Giveaway(guildId);
-    await giveaway.retrieve(documentId);
-    await giveaway.update(giveaway.guildId, 'My precious giveaway updated', giveaway.leaderId, giveaway.members, "still on the edge", "Now is 11h");
-    // console.log(giveaway);
-  });
+  /*test('should delete members from one giveaway', async () => {
+    giveaway = new Giveaway(guildId, "premier-giveway", 'Mon premier giveway');
+    await giveaway.retrieve();
 
-  /*
-  test('should fail to get document', () => {
-    const id = 'testId';
-    giveaway.sync(id);
-    expect(giveaway.id).toBe(id);
-  });
-
-  test('should initialize with given id', () => {
-    const id = '65eb8a9849a5bf22f759';
-    giveaway.sync(id);
-    expect(giveaway.id).toBe(id);
+    // Assuming you have a method to retrieve members
+    const members = await giveaway.retrieveMembers();
+    expect(members.length).toBeGreaterThanOrEqual(8);
+    console.log(members);
+    // await giveaway.removeMembers();
   });*/
+
+  /*
+  test('should add members to the giveaway', async () => {
+    giveaway = new Giveaway(guildId, "premier-giveway", 'Mon premier giveway');
+    await giveaway.retrieve();
+
+    const memberList = [];
+    // generate 10 members
+    for (let i = 0; i < 10; i++) {
+      memberList.push(generateMemberId());
+    }
+    
+    await giveaway.addMembers(memberList);
+    // Assuming you have a method to retrieve members
+    const members = await giveaway.retrieveMembers();
+    new Promise(resolve => setTimeout(resolve, 1000));
+    console.log("add members", giveaway.$id, members);
+    expect(members.length).toBeGreaterThanOrEqual(8);
+    await giveaway.removeMembers();
+    await giveaway.destroy();
+  }); */
+  
 
 });
