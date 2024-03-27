@@ -34,34 +34,13 @@ class Giveaway {
         
         const result = await pool.query("INSERT INTO giveaways (\"guildId\", slug, summary) VALUES ($1, $2, $3) RETURNING *", [this.guildId, this.slug, this.summary]);
         return result.rows[0];
-        /*try {
-          const document = await databases.createDocument(
-            appWriteConfig.databaseId, 
-            appWriteConfig.giveawayCollection, 
-            generateDocumentId(), 
-            newGiveaway
-          );
-          return document;
-
-        } catch (error) {
-          if (error instanceof AppwriteException) {
-            // throw an error with the AppwriteException message
-            throw new Error(error.message);
-          } else {
-            throw error;
-          }
-        }*/
-
     }
 
     async retrieve() {
         try {
           const result = await pool.query("SELECT * FROM giveaways WHERE \"guildId\" = $1 AND slug = $2", [this.guildId.toString(), this.slug]);
-          console.log(result);
-          if (result.length > 0) {
-            const giveaway = result[0];
-            console.log(giveaway);
-
+          if (result.rows.length > 0) {
+            const giveaway = result.rows[0];
             this.id = giveaway.id;
             this.guildId = giveaway.guildId;
             this.slug = giveaway.slug;
@@ -70,7 +49,6 @@ class Giveaway {
             this.winnerId = giveaway.winnerId;
           } else {
             const document = await this.create();
-            console.log(document);
             this.id = document.id;
             this.guildId = document.guildId;
             this.slug = document.slug;
@@ -85,15 +63,8 @@ class Giveaway {
       }
 
     async save() {
-        const updatedGiveaway = {
-          guildId: this.guildId,
-          slug: this.slug,
-          summary: this.summary,
-          now: this.now,
-          winner: this.winnerId
-        };
         try {
-          const result = await pool.query("UPDATE giveaways SET \"guildId\" = $1, slug = $2, summary = $3, now = $4, winnerId = $5, members = $6 WHERE id = $7 RETURNING *", [this.guildId, this.slug, this.summary, this.now, this.winnerId, this.members, this.id]);
+          const result = await pool.query("UPDATE giveaways SET \"guildId\" = $1, slug = $2, summary = $3, now = $4, \"lastWinner\" = $5 WHERE id = $6 RETURNING *", [this.guildId, this.slug, this.summary, this.now, this.winnerId, this.id]);
           return result.rows[0];
         } catch (error) {
           throw error;
@@ -144,7 +115,7 @@ class Giveaway {
     async retrieveMembers(db = true) {
       // return the list of members from appwrite
       if (db) {
-        const result = await pool.query("SELECT * FROM giveaway_members WHERE giveawayId = $1", [this.id]);
+        const result = await pool.query("SELECT * FROM giveaway_members WHERE \"giveawayId\" = $1", [this.id]);
         if (result.rows.length > 0) {
           this.members = result.rows;
           return this.members;
@@ -159,16 +130,11 @@ class Giveaway {
      * @param {*} memberList | Array of member ids
      */
     async addMembers(memberList) {
-      const members = [];
       // if giveawayId is not set, throw an error
       if (!this.id) {
         throw new Error('Impossible d\'ajouter des membres à un giveaway sans id.');
       }
-      for (let i = 0; i < memberList.length; i++) {
-        let member = new GiveawayMember(this.id, memberList[i]);        
-        members.push(member);
-      }
-      
+      return GiveawayMember.bulkCreate(memberList, this.id);        
     }
 
     // remove all members from the giveaway
@@ -187,9 +153,9 @@ class Giveaway {
       } else {
         membersId = membersSelection;
       }
-      for (const memberId of membersId) {
-        await databases.deleteDocument(appWriteConfig.databaseId, appWriteConfig.membersCollection, memberId);
-      }
+      
+      // format membersId to be used in the query
+      await pool.query("DELETE FROM giveaway_members WHERE id IN " + '(' + membersId.join(', ') + ')');
     }
 
     async pickWinner() {  
@@ -282,11 +248,35 @@ class Giveaway {
       }
     }
 
+    // bulk insert members
+    static async bulkCreate(members, giveawayId) {
+      // throw an error if members is not an array
+      if (!Array.isArray(members) || members.length === 0) {
+        throw new Error('members must be an array');
+      }
+
+      const newMembers = members.map(member => {
+        return {
+          memberId: member,
+          win: false,
+          winDate: null,
+          giveawayId: giveawayId
+        };
+      });
+      try {
+        const values = newMembers.map(member => `('${member.memberId}', ${member.win}, '${member.winDate}', ${member.giveawayId})`).join(', ');
+        console.log(values);
+
+        // const query = `INSERT INTO giveaway_members ("memberId", win, "winDate", "giveawayId") VALUES ${values} RETURNING *`;
+        //const result = await pool.query(query);
+        // return result.rows;
+      }
+      catch (error) {
+        throw error;
+      }
+    }
+
     async retrieve() {
-      const filters = [
-        Query.equal('memberId', this.memberId),
-        Query.equal('giveawayId', this.giveawayId)
-      ];
       try {
         const result = await pool.query("SELECT * FROM giveaway_members WHERE \"memberId\" = $1 AND \"giveawayId\" = $2", [this.memberId, this.giveawayId]);
         if (result.rows.length > 0) {
@@ -298,7 +288,7 @@ class Giveaway {
           await this.create(this.giveawayId, this.memberId);
         }
       } catch (error) {
-        if (error instanceof AppwriteException) {
+        if (error.message != undefined && error.message != '') {
           // throw an error with the AppwriteException message
           throw new Error(error.message);
         } else {
