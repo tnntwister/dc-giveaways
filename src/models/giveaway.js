@@ -143,20 +143,21 @@ class Giveaway {
     // remove all members from the giveaway
     async removeMembers(membersSelection = null) {
       let membersId = [];
+      let members = [];
+
       if (membersSelection === null) {
-        
-        const members = await this.retrieveMembers();
+        members = await this.retrieveMembers();
         if (members.length === 0) {
           return;
-        }
-        // get the list of members id of the giveaway
-        membersId = members
-        .filter(member => member.giveawayId === this.id)
-        .map(member => member.id);        
+        }    
       } else {
-        membersId = membersSelection;
+        members = membersSelection;
       }
-      
+
+      membersId = members
+        .filter(member => member.giveawayId === this.id)
+        .map(member => member.id);  
+
       // format membersId to be used in the query
       await pool.query("DELETE FROM giveaway_members WHERE id IN " + '(' + membersId.join(', ') + ')');
     }
@@ -304,14 +305,10 @@ class Giveaway {
     async setWin(memberDocumentId) {
       this.win = true;
       this.winDate = new Date();
-      const updatedMember = {
-        memberId: this.memberId,
-        win: this.win,
-        winDate: this.winDate,
-        giveawayId: this.giveawayId
-      };
+      this.winDate = this.winDate.toISOString();
+
       try {
-        const result = await pool.query("UPDATE giveaway_members SET win = $1, winDate = $2 WHERE id = $3 RETURNING *", [this.win, this.winDate, memberDocumentId]);
+        const result = await pool.query("UPDATE giveaway_members SET win = $1, \"winDate\" = $2 WHERE id = $3 RETURNING *", [this.win, this.winDate, memberDocumentId]);
         return result.rows[0];
       } catch (error) {
         throw error;
@@ -319,4 +316,6 @@ class Giveaway {
     }
   }
 
-  module.exports = Giveaway;
+  module.exports = Giveaway;  
+  module.exports.GiveawayMember = GiveawayMember;
+  module.exports.GiveawayMemberNotFoundError = GiveawayMemberNotFoundError;

@@ -1,5 +1,6 @@
 const Giveaway = require('../models/giveaway.js');
-const { generateDocumentId, generateMemberId } = require('../helpers/ids');
+const { GiveawayMember } = require('../models/giveaway.js');
+const { generateMemberId } = require('../helpers/ids');
 
 beforeAll(() => {
   guildId = '1205061903601369118';
@@ -32,20 +33,35 @@ describe('Giveaway class', () => {
     await giveaway.retrieve();
 
     const memberList = [];
-    // generate 10 members
     for (let i = 0; i < 10; i++) {
      memberList.push(generateMemberId());
     }
     
     await giveaway.addMembers(memberList);
-    // Assuming you have a method to retrieve members
     const members = await giveaway.retrieveMembers();
-    // new Promise(resolve => setTimeout(resolve, 1000));
-    // console.log("add members", giveaway.id, members);
     expect(members.length).toBeGreaterThanOrEqual(8);
-
   }); 
-  
+
+  test('should remove members from the giveaway', async () => {
+    let members = await giveaway.retrieveMembers();
+    expect(members.length).toBeGreaterThanOrEqual(8);
+    const membersToRemove = members.slice(8); // select all members after the 8th
+    await giveaway.removeMembers(membersToRemove);
+    members = await giveaway.retrieveMembers();
+    expect(members.length).toBe(8);
+  });
+
+  test('should draw a winner', async () => {
+    await giveaway.retrieve();
+    const winnerId = await giveaway.pickWinner();
+    expect(winnerId).not.toBeNull();
+    let winner = new GiveawayMember(giveaway.id, winnerId);
+    await winner.retrieve();
+    console.log(winner);
+    expect(winner.memberId).toBe(winnerId);
+    expect(winner.winDate).not.toBeNull();
+  });
+    
   afterAll(async () => {
     await giveaway.removeMembers();
     await giveaway.destroy();
