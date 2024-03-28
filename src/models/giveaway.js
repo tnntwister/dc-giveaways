@@ -167,20 +167,28 @@ class Giveaway {
       if (members.length === 0) {
         throw new GiveawayMemberNotFoundError();
       }
-      const membersId = members.map(member => member.memberId);
+
+      // if all members are winners, set all members to false
+      if (members.every(member => member.win === true)) {
+        await pool.query("UPDATE giveaway_members SET win = false, \"winDate\" = NULL WHERE \"giveawayId\" = $1", [this.id]);
+      }
+
       // pick a random winner
-      const winnerId = membersId[Math.floor(Math.random() * membersId.length)];
+      const pretenders = members.filter(member => member.win === false);
+      const winner = pretenders[Math.floor(Math.random() * pretenders.length)];
+      
 
       // write information in the database
-      const member = new GiveawayMember(this.id, winnerId);
-      member.setWin(members.find(member => member.memberId === winnerId).id);
+      const member = new GiveawayMember(this.id, winner.memberId);            
+      await member.retrieve();
+      member.setWin(member.id);
 
       // save information in giveaway
-      this.winnerId = winnerId;
-      this.setNow('Le gagnant est ' + winnerId);
+      this.winnerId = member.memberId;
+      this.setNow('Le gagnant est u' + this.winnerId + 'u ! Félicitations à lui/elle !');
       this.save();
 
-      return winnerId;
+      return this.winnerId;
     }
 
     setName(slug) {
@@ -217,6 +225,7 @@ class Giveaway {
 
   class GiveawayMember {
     constructor(giveawayId, memberId, save = true) {
+      this.id = null;
       this.memberId = memberId;
       this.win = false;
       this.winDate = null;
@@ -258,7 +267,6 @@ class Giveaway {
       if (!Array.isArray(members) || members.length === 0) {
         throw new Error('members must be an array');
       }
-
       const newMembers = members.map(member => {
         return {
           memberId: member,
@@ -272,6 +280,7 @@ class Giveaway {
         return `('${member.memberId}', ${member.win}, ${winDate}, ${member.giveawayId})`;
       }).join(', ');
       const query = `INSERT INTO giveaway_members ("memberId", win, "winDate", "giveawayId") VALUES ${values}  ON CONFLICT DO NOTHING RETURNING *`;
+      // console.log('query', query);
       try {
         const result = await pool.query(query);
         return result.rows;
@@ -285,6 +294,7 @@ class Giveaway {
       try {
         const result = await pool.query("SELECT * FROM giveaway_members WHERE \"memberId\" = $1 AND \"giveawayId\" = $2", [this.memberId, this.giveawayId]);
         if (result.rows.length > 0) {
+          this.id = result.rows[0].id;
           this.memberId = result.rows[0].memberId;
           this.win = result.rows[0].win;
           this.winDate = result.rows[0].winDate;
@@ -302,13 +312,18 @@ class Giveaway {
       }
     }
 
-    async setWin(memberDocumentId) {
+    /**
+     * 
+     * @param {*} memberId 
+     * @returns 
+     */  
+    async setWin(memberId) {
       this.win = true;
       this.winDate = new Date();
       this.winDate = this.winDate.toISOString();
 
       try {
-        const result = await pool.query("UPDATE giveaway_members SET win = $1, \"winDate\" = $2 WHERE id = $3 RETURNING *", [this.win, this.winDate, memberDocumentId]);
+        const result = await pool.query("UPDATE giveaway_members SET win = $1, \"winDate\" = $2 WHERE id = $3 RETURNING *", [this.win, this.winDate, memberId]);
         return result.rows[0];
       } catch (error) {
         throw error;

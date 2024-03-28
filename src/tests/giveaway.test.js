@@ -57,7 +57,6 @@ describe('Giveaway class', () => {
     expect(winnerId).not.toBeNull();
     let winner = new GiveawayMember(giveaway.id, winnerId);
     await winner.retrieve();
-    console.log(winner);
     expect(winner.memberId).toBe(winnerId);
     expect(winner.winDate).not.toBeNull();
   });

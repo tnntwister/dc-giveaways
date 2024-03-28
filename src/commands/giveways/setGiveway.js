@@ -29,7 +29,6 @@ module.exports = {
 
             // on ajoute les membres qui sont dans la guilde
             const members = await interaction.guild.members.fetch();
-            console.log(members);
             const memberList = [];
             members.forEach(member => {
                 memberList.push(member.id);

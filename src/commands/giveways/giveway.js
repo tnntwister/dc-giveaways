@@ -16,14 +16,21 @@ module.exports = {
         
         const giveaway = new Giveaway(guild.id, interaction.options.getString('id'));
         await giveaway.retrieve();
-        giveaway.pickWinner();
-        const winnerId = giveaway.winnerId;
-        const winner = await guild.members.fetch(winnerId);
-        if (winner == null) {
+        await giveaway.pickWinner();
+        
+        let winner;
+        try {
+            winner = await guild.members.fetch(giveaway.winnerId);
+        } catch (error) {
+            console.log('members list', winner);
+            console.error(`Aucun membre trouvé avec l'ID ${giveaway.winnerId}`);
+        }
+
+        if (!winner) {
             await interaction.reply({ content: `Aucun gagnant trouvé`, ephemeral: false });
             return;
         }
-        console.log(winner.user);
+        
         await interaction.reply({ content: `Le gagnant est ${winner.user.username}`, ephemeral: false });
     },
 };
