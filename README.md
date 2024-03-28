@@ -6,9 +6,9 @@ Code for a small bot to manage giveaways.
 
 you can manage giveaways with custom commands : 
 
-- **setGiveway** <id> <summary> : create or update the giveaway member list
-- **giveaway**  <id> : launch a giveaway roll
-- **lastGiveaway**  <id> : recall the last winner for a giveaway
+- **setGiveway** `id` `summary` : create or update the giveaway member list
+- **giveaway**  `id` : launch a giveaway roll
+- **lastGiveaway**  `id` : recall the last winner for a giveaway
 
 🔔 Be careful : the id is unique, but if you mispelled it you will create another giveaway list. 
 
