@@ -163,7 +163,7 @@ class Giveaway {
     }
 
     async pickWinner() {  
-      const members = await this.retrieveMembers();
+      let members = await this.retrieveMembers();
       if (members.length === 0) {
         throw new GiveawayMemberNotFoundError();
       }
@@ -171,6 +171,7 @@ class Giveaway {
       // if all members are winners, set all members to false
       if (members.every(member => member.win === true)) {
         await pool.query("UPDATE giveaway_members SET win = false, \"winDate\" = NULL WHERE \"giveawayId\" = $1", [this.id]);
+        members = await this.retrieveMembers();
       }
 
       // pick a random winner
