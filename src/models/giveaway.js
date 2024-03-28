@@ -271,7 +271,7 @@ class Giveaway {
         const winDate = member.winDate == 'null' ? `'${member.winDate}'` : null;
         return `('${member.memberId}', ${member.win}, ${winDate}, ${member.giveawayId})`;
       }).join(', ');
-      const query = `INSERT INTO giveaway_members ("memberId", win, "winDate", "giveawayId") VALUES ${values} RETURNING *`;
+      const query = `INSERT INTO giveaway_members ("memberId", win, "winDate", "giveawayId") VALUES ${values}  ON CONFLICT DO NOTHING RETURNING *`;
       try {
         const result = await pool.query(query);
         return result.rows;

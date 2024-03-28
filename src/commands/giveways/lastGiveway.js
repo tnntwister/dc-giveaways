@@ -1,16 +1,6 @@
-const appWriteConfig = require('../../config/appwrite.js');
-const sdk = require('node-appwrite');
-const appWriteClient = new sdk.Client();
-const databases = new sdk.Databases(appWriteClient);
-
-appWriteClient
-.setEndpoint(appWriteConfig.endpoint) 
-.setProject(appWriteConfig.projectId)
-.setKey(appWriteConfig.apiKey) 
-;
-
 const { SlashCommandBuilder } = require('@discordjs/builders');
-require('../../models/giveaway.js');
+const Giveaway = require('../../models/giveaway.js');
+// const { GiveawayMember } = require('../../models/giveaway.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -26,8 +16,10 @@ module.exports = {
         const giveaway = new Giveaway(guild.id, interaction.options.getString('id'));
         await giveaway.retrieve();
 
-        const winnerId = giveaway.winnerId;
-        const winner = await guild.members.fetch(winnerId);
-        await interaction.reply({ content: `Le gagnant est ${winner.user.username}`, ephemeral: false });
+        if (giveaway.now == '') {
+            await interaction.reply({ content: `Aucun gagnant trouvé`, ephemeral: false });
+            return;
+        }
+        await interaction.reply({ content: `${giveaway.now}`, ephemeral: false });
     },
 };
