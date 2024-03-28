@@ -30,7 +30,8 @@ class PG4Discord {
                 now VARCHAR(255),
                 lastWinner VARCHAR(30),
                 guildId VARCHAR(40) NOT NULL,
-                slug VARCHAR(50)
+                slug VARCHAR(50),
+                createdAt DATE
             );
         `;
 

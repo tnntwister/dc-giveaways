@@ -14,17 +14,20 @@ require('../../models/giveaway.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('now')
-        .setDescription('Get the now message.'),
+        .setName('last-giveaway')
+        .setDescription('Get the last winner.')
+        .addStringOption(option =>
+            option.setName('id')
+                .setDescription('Identifiant du giveway')
+                .setRequired(true)),
     async execute(interaction, client) {
         const guild = await client.guilds.fetch(interaction.guildId);
-        const member = await guild.members.fetch(interaction.user.id);
-        // Get the member's roles
-        const roles = member.roles.cache;
 
-        if(roles.some(role => role.name === 'MC')){
-            await interaction.reply({ content: `${member.user.username} est un maître de cérémonie`, ephemeral: false }); 
-        }   
-            
+        const giveaway = new Giveaway(guild.id, interaction.options.getString('id'));
+        await giveaway.retrieve();
+
+        const winnerId = giveaway.winnerId;
+        const winner = await guild.members.fetch(winnerId);
+        await interaction.reply({ content: `Le gagnant est ${winner.user.username}`, ephemeral: false });
     },
 };
