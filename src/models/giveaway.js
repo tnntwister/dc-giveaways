@@ -18,6 +18,7 @@ class Giveaway {
        this.summary = summary;
        this.now = '';
        this.winnerId = '';
+       this.createdAt = new Date();
        this.members = [];
 
       // on essaie de récupérer le giveaway depuis la base de données
@@ -47,6 +48,7 @@ class Giveaway {
             this.summary = giveaway.summary;
             this.now = giveaway.now;
             this.winnerId = giveaway.winnerId;
+            this.createdAt = giveaway.createdAt;
           } else {
             const document = await this.create();
             this.id = document.id;
@@ -55,6 +57,7 @@ class Giveaway {
             this.summary = document.summary;
             this.now = document.now;
             this.winnerId = document.winnerId;
+            this.createdAt = document.createdAt;
           }
           return this;
         } catch (error) {
@@ -263,13 +266,14 @@ class Giveaway {
           giveawayId: giveawayId
         };
       });
+      const values = newMembers.map(member => {
+        const winDate = member.winDate == 'null' ? `'${member.winDate}'` : null;
+        return `('${member.memberId}', ${member.win}, ${winDate}, ${member.giveawayId})`;
+      }).join(', ');
+      const query = `INSERT INTO giveaway_members ("memberId", win, "winDate", "giveawayId") VALUES ${values} RETURNING *`;
       try {
-        const values = newMembers.map(member => `('${member.memberId}', ${member.win}, '${member.winDate}', ${member.giveawayId})`).join(', ');
-        console.log(values);
-
-        // const query = `INSERT INTO giveaway_members ("memberId", win, "winDate", "giveawayId") VALUES ${values} RETURNING *`;
-        //const result = await pool.query(query);
-        // return result.rows;
+        const result = await pool.query(query);
+        return result.rows;
       }
       catch (error) {
         throw error;

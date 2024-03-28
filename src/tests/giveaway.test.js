@@ -1,38 +1,34 @@
 const Giveaway = require('../models/giveaway.js');
 const { generateDocumentId, generateMemberId } = require('../helpers/ids');
 
+beforeAll(() => {
+  guildId = '1205061903601369118';
+  giveaway = giveaway = new Giveaway(guildId, "premier-giveway", 'Mon premier giveway');
+});
+
 describe('Giveaway class', () => {
-  let giveaway;
-  const guildId = '1205061903601369118';
-/*
   test('should create a giveway', async () => {
-    giveaway = new Giveaway(guildId, "premier-giveway", 'Mon premier giveway');
     await giveaway.retrieve();      
     expect(giveaway.guildId).toBe(guildId);
     expect(giveaway.$id).not.toBeNull();
     expect(giveaway.slug).toBe("premier-giveway");
-    expect(giveaway.summary).toBe('Mon premier giveway');    
-    await giveaway.destroy();
   });
 
   test('should update a giveway', async () => {
-    giveaway = new Giveaway(guildId, "second-giveway", 'Mon second giveway');
     await giveaway.retrieve();    
 
     // on change les valeurs
-    giveaway.setSummary('Mon second giveway updated');
+    giveaway.setSummary('Mon premier giveway updated');
     giveaway.setNow('Now is 10h');
     await giveaway.save();
 
-    expect(giveaway.slug).toBe("second-giveway");
-    expect(giveaway.summary).toBe('Mon second giveway updated');
+    expect(giveaway.slug).toBe("premier-giveway");
+    expect(giveaway.summary).toBe('Mon premier giveway updated');
     expect(giveaway.now).toBe('Now is 10h');
-    await giveaway.destroy();
-  }); */
+  }); 
 
 
   test('should add members to the giveaway', async () => {
-    giveaway = new Giveaway(guildId, "premier-giveway", 'Mon premier giveway');
     await giveaway.retrieve();
 
     const memberList = [];
@@ -47,9 +43,12 @@ describe('Giveaway class', () => {
     // new Promise(resolve => setTimeout(resolve, 1000));
     // console.log("add members", giveaway.id, members);
     expect(members.length).toBeGreaterThanOrEqual(8);
-    await giveaway.removeMembers();
-    await giveaway.destroy();
+
   }); 
   
+  afterAll(async () => {
+    await giveaway.removeMembers();
+    await giveaway.destroy();
+  });
 
 });
