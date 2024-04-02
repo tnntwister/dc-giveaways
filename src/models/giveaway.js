@@ -1,6 +1,7 @@
 const pgConfig = require('../config/pg.js');
 const { Pool } = require('pg');
-const { generateDocumentId, generateMemberId } = require('../helpers/ids');
+// const { generateDocumentId, generateMemberId } = require('../helpers/ids');
+const crypto = require('crypto');
 
 const pool = new Pool({
   user: pgConfig.user,
@@ -176,7 +177,7 @@ class Giveaway {
 
       // pick a random winner
       const pretenders = members.filter(member => member.win === false);
-      const winner = pretenders[Math.floor(Math.random() * pretenders.length)];
+      const winner = pretenders[this._chooseIndexRandomly(this.slug, pretenders.length)];
       
 
       // write information in the database
@@ -215,6 +216,17 @@ class Giveaway {
     getNow() {
       return this.now;
     }  
+
+    _chooseIndexRandomly(slug, participantsCount) {
+      const hash = crypto
+        .createHash('md5')
+        .update(slug)
+        .digest('hex')
+      const hashPrefix = hash.substring(0, 8)
+      return Math.floor(
+        ((parseInt(hashPrefix, 16) % 0xffffffff) / 0xffffffff) * participantsCount
+      )
+    }
   }
 
   class GiveawayMemberNotFoundError extends Error {
