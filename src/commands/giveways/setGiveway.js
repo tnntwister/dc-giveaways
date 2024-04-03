@@ -15,6 +15,16 @@ module.exports = {
                 .setDescription('Description donné au giveaway')
                 ),
         async execute(interaction) {
+            /**
+             * gestion des droits
+             */
+            if (!interaction.member.permissions.has('ADMINISTRATOR')) {
+                await interaction.reply({ content: `Vous n'avez pas les droits pour effectuer cette action`, ephemeral: true });
+                return;
+            }
+            /**
+             * début de l'exécution
+             */
             const slug = interaction.options.getString('id');
             const summary = interaction.options.getString('description');
 

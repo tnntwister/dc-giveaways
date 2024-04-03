@@ -10,6 +10,8 @@ you can manage giveaways with custom commands :
 - **giveaway**  `id` : launch a giveaway roll
 - **lastGiveaway**  `id` : recall the last winner for a giveaway
 - **listSubscribers** `id` : list the members subscribed to giveaway
+- **listWinners** `id` : list the winners subscribed to giveaway
+- **listAttendees** `id` : list the subscribers to giveaway that can win to the next giveaway
 
 🔔 Be careful : the id is unique, but if you mispelled it you will create another giveaway list. 
 

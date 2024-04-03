@@ -12,6 +12,16 @@ module.exports = {
                 .setDescription('Identifiant du giveaway')
                 .setRequired(true)),
     async execute(interaction, client) {
+        /**
+         * gestion des droits
+         */
+        if (!interaction.member.permissions.has('ADMINISTRATOR')) {
+            await interaction.reply({ content: `Vous n'avez pas les droits pour effectuer cette action`, ephemeral: true });
+            return;
+        }
+        /**
+         * début de l'exécution
+         */
         const guild = await client.guilds.fetch(interaction.guildId);
         
         const giveaway = new Giveaway(guild.id, interaction.options.getString('id'));

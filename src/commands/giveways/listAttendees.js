@@ -4,8 +4,8 @@ const { memberProfile } = require('../../helpers/ids.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('list-subscribers')
-        .setDescription('Get list of all giveaway subscribers.')
+        .setName('list-attendees')
+        .setDescription('Get list of all giveaway attendees.')
         .addStringOption(option =>
             option.setName('id')
                 .setDescription('Identifiant du giveway')
@@ -27,15 +27,17 @@ module.exports = {
         await giveaway.retrieve();
 
         // get the list of all members
-        const giveawayMembers = await giveaway.retrieveMembers();
+        let giveawayMembers = await giveaway.retrieveMembers();
 
         if (giveawayMembers.length === 0) {
-            await interaction.reply({ content: `Pas d'inscrits pour ${giveaway.slug}`, ephemeral: true });
+            await interaction.reply({ content: `Pas de participants pour ${giveaway.slug}`, ephemeral: true });
             return;
         }
        
-        // create a string with all members
+        // create a string with all members that won
+        giveawayMembers = giveawayMembers.filter(member => member.win === false);
         const memberIds = giveawayMembers.map(member => member.memberId);
+        
         const members = await guild.members.fetch({ user: memberIds });
 
         // Construct message with mentions
@@ -52,6 +54,6 @@ module.exports = {
             cnt++;
         });
 
-        await interaction.reply({ content: `Inscrits pour ${giveaway.slug}: ${message}`, ephemeral: true });
+        await interaction.reply({ content: `Gagnants pour ${giveaway.slug}: ${message}`, ephemeral: true });
     },
 };
