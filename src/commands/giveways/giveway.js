@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Giveaway = require('../../models/giveaway.js');
-// const { GiveawayMember } = require('../../models/giveaway.js');
+const { memberProfile } = require('../../helpers/ids.js');
 
 
 module.exports = {
@@ -31,6 +31,6 @@ module.exports = {
             return;
         }
         
-        await interaction.reply({ content: `Le gagnant est ${winner.user.username}`, ephemeral: false });
+        await interaction.reply({ content: `Le gagnant du giveaway ${giveaway.slug} est ${memberProfile(winner)}`, ephemeral: false });
     },
 };

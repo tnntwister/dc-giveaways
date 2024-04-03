@@ -23,6 +23,12 @@ function generateMemberId() {
     return id;    
 }
 
+// generate 18 digit id
+function memberProfile(member) {
+  return ` <@${member.id}> (${member.displayName}) `;    
+}
+
+
 
 
 /*
@@ -32,5 +38,6 @@ function anotherHelperFunction() {
 
 module.exports = {
     generateDocumentId,
-    generateMemberId
+    generateMemberId,
+    memberProfile
   };

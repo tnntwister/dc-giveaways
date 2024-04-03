@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Giveaway = require('../../models/giveaway.js');
+const { memberProfile } = require('../../helpers/ids.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,28 +23,25 @@ module.exports = {
             await interaction.reply({ content: `Pas d'inscrits pour ${giveaway.slug}`, ephemeral: true });
             return;
         }
+       
         // create a string with all members
-        const memberIds = [];
-        let message = "Inscrits pour le giveaway:";
+        const memberIds = giveawayMembers.map(member => member.memberId);
+        const members = await guild.members.fetch({ user: memberIds });
 
-        for (const member of giveawayMembers) {
-                memberIds.push(member.memberId);    
-        }
+        // Construct message with mentions
+        let message = "";
+        const membersCnt = members.size;
+        let cnt = 1;
 
-        const memberManager = guild.members;
-
-        await memberManager.fetch({ user: memberIds })
-        .then(members => {
-            let mkey = 0;
-            members.forEach(member => {
-                // console.log(`Membre trouvé ${mkey}/${memberIds.length -1} : ${member.user.tag}`);
-                message += (mkey <= memberIds.length - 2) ? member.user.tag + ', ' : member.user.tag;
-                mkey++;
-            });
-        })
-        .catch(console.error);
+        members.forEach(member => {
+            // Use guild-specific displayName and mention format for clickable link
+            message += memberProfile(member);
+            if (cnt <= membersCnt - 1) {
+                message += "/";
+            }
+            cnt++;
+        });
 
         await interaction.reply({ content: `Inscrits pour ${giveaway.slug}: ${message}`, ephemeral: true });
-                
     },
 };

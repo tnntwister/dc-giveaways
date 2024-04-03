@@ -31,6 +31,10 @@ module.exports = {
             const members = await interaction.guild.members.fetch();
             const memberList = [];
             members.forEach(member => {
+                // restrictions aux membres actifs
+                if (member.user.bot || member.user.system) {
+                    return;
+                }
                 memberList.push(member.id);
             });
             await giveaway.addMembers(memberList);

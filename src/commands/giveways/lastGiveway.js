@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Giveaway = require('../../models/giveaway.js');
-const { user } = require('../../config/pg.js');
-// const { GiveawayMember } = require('../../models/giveaway.js');
+const { memberProfile } = require('../../helpers/ids.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -27,7 +26,7 @@ module.exports = {
         userId = userId.substring(1, userId.length - 1);
         try {
             winner = await guild.members.fetch(userId);
-            giveaway.now = giveaway.now.replace('u'+userId+'u', winner.user.username);
+            giveaway.now = giveaway.now.replace('u'+userId+'u', memberProfile(winner));
         } catch (error) {
             console.error(`Aucun membre trouvé avec l'ID ${userId}`);
         }
