@@ -36,7 +36,6 @@ module.exports = {
        
         // create a string with all members that won
         giveawayMembers = giveawayMembers.filter(member => member.win === true);
-        console.log('giveawayMembers', giveawayMembers);
         const memberIds = giveawayMembers.map(member => member.memberId);
         
         const members = await guild.members.fetch({ user: memberIds });
