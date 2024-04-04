@@ -1,0 +1,3 @@
+forbidden_message: "You are not authorized to perform this action."
+attendees_noresults: "No attendees for {{giveawayName}}"
+attendees_message: "Attendees for {{giveawayName}}: {{message}}"

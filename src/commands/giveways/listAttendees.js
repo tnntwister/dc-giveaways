@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Giveaway = require('../../models/giveaway.js');
 const { memberProfile } = require('../../helpers/ids.js');
+const translator = require('../../utils/translator');
+const appConfig = require('../../config/app');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,7 +17,7 @@ module.exports = {
          * gestion des droits
          */
         if (!interaction.member.permissions.has('ADMINISTRATOR')) {
-            await interaction.reply({ content: `Vous n'avez pas les droits pour effectuer cette action`, ephemeral: true });
+            await interaction.reply({ content: translator.translate('forbidden_message', appConfig.language), ephemeral: true });
             return;
         }
         /**
@@ -30,7 +32,7 @@ module.exports = {
         let giveawayMembers = await giveaway.retrieveMembers();
 
         if (giveawayMembers.length === 0) {
-            await interaction.reply({ content: `Pas de participants pour ${giveaway.slug}`, ephemeral: true });
+            await interaction.reply({ content:  translator.translate('attendees_noresults', appConfig.language, { giveawayName: giveaway.slug }), ephemeral: true });
             return;
         }
        
@@ -54,6 +56,6 @@ module.exports = {
             cnt++;
         });
 
-        await interaction.reply({ content: `Gagnants pour ${giveaway.slug}: ${message}`, ephemeral: true });
+        await interaction.reply({ content: translator.translate('attendees_message', appConfig.language, { giveawayName: giveaway.slug, message:message }), ephemeral: true });
     },
 };

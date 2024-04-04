@@ -1,0 +1,3 @@
+forbidden_message: "Vous n'avez pas les droits pour effectuer cette action."
+attendees_noresults: "Pas de participants pour {{giveawayName}}"
+attendees_message: "Participant.e.s pour {{giveawayName}} : {{message}}"
