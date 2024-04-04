@@ -35,4 +35,15 @@ for example
 
 ## How to install it in your discord server
 
-**wip**
+You'll need : 
+- a PostgreSQL database. 
+- a NodeJs server, able to run services
+
+1. Populate your PG database with the dump found at /documentation/postgre.sql
+2. clone the repository
+3. Configure your Discord Developer App 
+4. copy .env.example to .env, and fill all values
+5. declare a service on your service with the command `node <path>/src/index.js`
+6. install the bot in your serveur integrations. 
+
+

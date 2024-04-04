@@ -22,7 +22,7 @@ class PG4Discord {
     }
 
     // create structure of the table
-    async createGiveawaysTable() {
+    /*async createGiveawaysTable() {
         const query = `
             CREATE TABLE IF NOT EXISTS giveaways (
                 id SERIAL PRIMARY KEY,
@@ -36,10 +36,10 @@ class PG4Discord {
         `;
 
         await this.query(query);
-    }
+    }*/
 
     // create the giveaway members table
-    async createMembersTable() {
+    /*async createMembersTable() {
         const query = `
             CREATE TABLE IF NOT EXISTS giveaway_members (
                 id SERIAL PRIMARY KEY,
@@ -52,7 +52,7 @@ class PG4Discord {
         `;
 
         await this.query(query);
-    }
+    }*/
 
     async end() {
         await this.pool.end();
