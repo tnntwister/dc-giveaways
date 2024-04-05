@@ -24,3 +24,6 @@ yarn.lock
 # OS files
 .DS_Store
 Thumbs.db
+
+# documentation
+jsdocs/

@@ -1,0 +1,837 @@
+[
+  {
+    "id": "Giveaway()",
+    "longname": "Giveaway",
+    "name": "Giveaway",
+    "kind": "constructor",
+    "description": "Creates a new Giveaway instance.",
+    "memberof": "Giveaway",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the guild.",
+        "name": "guildId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The slug of the giveaway.",
+        "name": "slug"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "''",
+        "description": "The summary of the giveaway.",
+        "name": "summary"
+      }
+    ],
+    "order": 1
+  },
+  {
+    "id": "GiveawayMemberNotFoundError()",
+    "longname": "GiveawayMemberNotFoundError",
+    "name": "GiveawayMemberNotFoundError",
+    "kind": "constructor",
+    "description": "Creates a new GiveawayMemberNotFoundError instance.",
+    "memberof": "GiveawayMemberNotFoundError",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "\"Ce membre pour ce giveaway n'a pas été trouvé.\"",
+        "description": "The error message.",
+        "name": "message"
+      }
+    ],
+    "order": 18
+  },
+  {
+    "id": "GiveawayMember()",
+    "longname": "GiveawayMember",
+    "name": "GiveawayMember",
+    "kind": "constructor",
+    "description": "Creates a new GiveawayMember instance.",
+    "memberof": "GiveawayMember",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the giveaway.",
+        "name": "giveawayId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the member.",
+        "name": "memberId"
+      },
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": true,
+        "description": "Whether to save the member to the database or not.",
+        "name": "save"
+      }
+    ],
+    "order": 20
+  },
+  {
+    "id": "Giveaway",
+    "longname": "Giveaway",
+    "name": "Giveaway",
+    "kind": "class",
+    "scope": "global",
+    "meta": {
+      "lineno": 21,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 0
+  },
+  {
+    "id": "GiveawayMemberNotFoundError",
+    "longname": "GiveawayMemberNotFoundError",
+    "name": "GiveawayMemberNotFoundError",
+    "kind": "class",
+    "scope": "global",
+    "description": "Represents an error when a giveaway member is not found.",
+    "meta": {
+      "lineno": 311,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 17
+  },
+  {
+    "id": "GiveawayMember",
+    "longname": "GiveawayMember",
+    "name": "GiveawayMember",
+    "kind": "class",
+    "scope": "global",
+    "description": "Represents a Giveaway Member.",
+    "meta": {
+      "lineno": 325,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 19
+  },
+  {
+    "id": "Giveaway#create",
+    "longname": "Giveaway#create",
+    "name": "create",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Creates a new giveaway in the database.",
+    "memberof": "Giveaway",
+    "params": [],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<Object>"
+          ]
+        },
+        "description": "The created giveaway object."
+      }
+    ],
+    "meta": {
+      "lineno": 39,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 2
+  },
+  {
+    "id": "Giveaway#retrieve",
+    "longname": "Giveaway#retrieve",
+    "name": "retrieve",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Retrieves the giveaway from the database or creates a new one if not found.",
+    "memberof": "Giveaway",
+    "params": [],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<Giveaway>"
+          ]
+        },
+        "description": "The retrieved or created giveaway object."
+      }
+    ],
+    "meta": {
+      "lineno": 55,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 3
+  },
+  {
+    "id": "Giveaway#save",
+    "longname": "Giveaway#save",
+    "name": "save",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Saves the changes made to the giveaway in the database.",
+    "memberof": "Giveaway",
+    "params": [],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<Object>"
+          ]
+        },
+        "description": "The updated giveaway object."
+      }
+    ],
+    "meta": {
+      "lineno": 87,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 4
+  },
+  {
+    "id": "Giveaway#update",
+    "longname": "Giveaway#update",
+    "name": "update",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Updates the giveaway with new values.",
+    "memberof": "Giveaway",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the guild.",
+        "name": "guildId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The slug of the giveaway.",
+        "name": "slug"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the last winner.",
+        "name": "lastWinner"
+      },
+      {
+        "type": {
+          "names": [
+            "Array.<string>"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "[]",
+        "description": "The array of member IDs.",
+        "name": "members"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "''",
+        "description": "The summary of the giveaway.",
+        "name": "summary"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "''",
+        "description": "The current message of the giveaway.",
+        "name": "now"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<Object>"
+          ]
+        },
+        "description": "The updated giveaway object."
+      }
+    ],
+    "meta": {
+      "lineno": 106,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 5
+  },
+  {
+    "id": "Giveaway#destroy",
+    "longname": "Giveaway#destroy",
+    "name": "destroy",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Deletes the giveaway from the database.",
+    "memberof": "Giveaway",
+    "params": [],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<void>"
+          ]
+        }
+      }
+    ],
+    "exceptions": [
+      {
+        "type": {
+          "names": [
+            "Error"
+          ]
+        },
+        "description": "If the giveaway does not exist."
+      }
+    ],
+    "meta": {
+      "lineno": 140,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 6
+  },
+  {
+    "id": "Giveaway#retrieveMembers",
+    "longname": "Giveaway#retrieveMembers",
+    "name": "retrieveMembers",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Retrieves the members of the giveaway from the database or returns the existing members.",
+    "memberof": "Giveaway",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": true,
+        "description": "Whether to retrieve members from the database or not.",
+        "name": "db"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<Array.<Object>>"
+          ]
+        },
+        "description": "The array of giveaway members."
+      }
+    ],
+    "meta": {
+      "lineno": 156,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 7
+  },
+  {
+    "id": "Giveaway#addMembers",
+    "longname": "Giveaway#addMembers",
+    "name": "addMembers",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Adds members to the giveaway.",
+    "memberof": "Giveaway",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Array.<string>"
+          ]
+        },
+        "description": "The array of member IDs to add.",
+        "name": "memberList"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<void>"
+          ]
+        }
+      }
+    ],
+    "exceptions": [
+      {
+        "type": {
+          "names": [
+            "Error"
+          ]
+        },
+        "description": "If the giveaway ID is not set."
+      }
+    ],
+    "meta": {
+      "lineno": 175,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 8
+  },
+  {
+    "id": "Giveaway#pickWinner",
+    "longname": "Giveaway#pickWinner",
+    "name": "pickWinner",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Picks a random winner from the giveaway members.",
+    "memberof": "Giveaway",
+    "params": [],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<string>"
+          ]
+        },
+        "description": "The ID of the winner."
+      }
+    ],
+    "exceptions": [
+      {
+        "type": {
+          "names": [
+            "GiveawayMemberNotFoundError"
+          ]
+        },
+        "description": "If no members are found."
+      }
+    ],
+    "meta": {
+      "lineno": 210,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 9
+  },
+  {
+    "id": "Giveaway#setName",
+    "longname": "Giveaway#setName",
+    "name": "setName",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Sets the slug of the giveaway.",
+    "memberof": "Giveaway",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The slug to set.",
+        "name": "slug"
+      }
+    ],
+    "meta": {
+      "lineno": 245,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 10
+  },
+  {
+    "id": "Giveaway#getName",
+    "longname": "Giveaway#getName",
+    "name": "getName",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Gets the slug of the giveaway.",
+    "memberof": "Giveaway",
+    "params": [],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The slug of the giveaway."
+      }
+    ],
+    "meta": {
+      "lineno": 253,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 11
+  },
+  {
+    "id": "Giveaway#setSummary",
+    "longname": "Giveaway#setSummary",
+    "name": "setSummary",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Sets the summary of the giveaway.",
+    "memberof": "Giveaway",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The summary to set.",
+        "name": "summary"
+      }
+    ],
+    "meta": {
+      "lineno": 261,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 12
+  },
+  {
+    "id": "Giveaway#getSummary",
+    "longname": "Giveaway#getSummary",
+    "name": "getSummary",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Gets the summary of the giveaway.",
+    "memberof": "Giveaway",
+    "params": [],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The summary of the giveaway."
+      }
+    ],
+    "meta": {
+      "lineno": 269,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 13
+  },
+  {
+    "id": "Giveaway#setNow",
+    "longname": "Giveaway#setNow",
+    "name": "setNow",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Sets the current message of the giveaway.",
+    "memberof": "Giveaway",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The current message to set.",
+        "name": "nowMessage"
+      }
+    ],
+    "meta": {
+      "lineno": 277,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 14
+  },
+  {
+    "id": "Giveaway#getNow",
+    "longname": "Giveaway#getNow",
+    "name": "getNow",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Gets the current message of the giveaway.",
+    "memberof": "Giveaway",
+    "params": [],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The current message of the giveaway."
+      }
+    ],
+    "meta": {
+      "lineno": 285,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 15
+  },
+  {
+    "id": "Giveaway#_chooseIndexRandomly",
+    "longname": "Giveaway#_chooseIndexRandomly",
+    "name": "_chooseIndexRandomly",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Chooses an index randomly based on the slug and participants count.",
+    "memberof": "Giveaway",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The slug of the giveaway.",
+        "name": "slug"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The number of participants.",
+        "name": "participantsCount"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The randomly chosen index."
+      }
+    ],
+    "access": "private",
+    "meta": {
+      "lineno": 296,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "order": 16
+  },
+  {
+    "id": "GiveawayMember#create",
+    "longname": "GiveawayMember#create",
+    "name": "create",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Creates a new member in the database.",
+    "memberof": "GiveawayMember",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the giveaway.",
+        "name": "giveawayId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the member.",
+        "name": "memberId"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<Object>"
+          ]
+        },
+        "description": "The created member object."
+      }
+    ],
+    "meta": {
+      "lineno": 352,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 21
+  },
+  {
+    "id": "GiveawayMember#retrieve",
+    "longname": "GiveawayMember#retrieve",
+    "name": "retrieve",
+    "kind": "function",
+    "scope": "instance",
+    "description": "Retrieves the member from the database.",
+    "memberof": "GiveawayMember",
+    "params": [],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<void>"
+          ]
+        }
+      }
+    ],
+    "meta": {
+      "lineno": 409,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 23
+  },
+  {
+    "id": "GiveawayMember#setWin",
+    "longname": "GiveawayMember#setWin",
+    "name": "setWin",
+    "kind": "function",
+    "scope": "instance",
+    "memberof": "GiveawayMember",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "name": "giveaway_members.memberId"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Array.<string>"
+          ]
+        },
+        "description": "The array of member IDs."
+      }
+    ],
+    "meta": {
+      "lineno": 436,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 24
+  },
+  {
+    "id": "GiveawayMember.bulkCreate",
+    "longname": "GiveawayMember.bulkCreate",
+    "name": "bulkCreate",
+    "kind": "function",
+    "scope": "static",
+    "description": "Creates multiple members in the database.",
+    "memberof": "GiveawayMember",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Array.<string>"
+          ]
+        },
+        "description": "The array of member IDs.",
+        "name": "members"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the giveaway.",
+        "name": "giveawayId"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Promise.<Array.<Object>>"
+          ]
+        },
+        "description": "The array of created member objects."
+      }
+    ],
+    "exceptions": [
+      {
+        "type": {
+          "names": [
+            "Error"
+          ]
+        },
+        "description": "If members is not an array."
+      }
+    ],
+    "meta": {
+      "lineno": 377,
+      "filename": "giveaway.js",
+      "path": "/home/tnn/Projets/discord/dc-giveaways/src/models"
+    },
+    "async": true,
+    "order": 22
+  }
+]

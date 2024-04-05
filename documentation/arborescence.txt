@@ -1,0 +1,684 @@
+.
+├── documentation
+│   └── jsdocs
+│       ├── fonts
+│       ├── scripts
+│       └── styles
+├── locales
+├── node_modules
+│   ├── @ampproject
+│   │   └── remapping
+│   ├── ansi-escapes
+│   ├── ansi-escape-sequences
+│   │   ├── dist
+│   │   └── node_modules
+│   ├── ansi-regex
+│   ├── ansi-styles
+│   ├── anymatch
+│   ├── argparse
+│   │   └── lib
+│   ├── array-back
+│   │   └── dist
+│   ├── asynckit
+│   │   └── lib
+│   ├── axios
+│   │   ├── dist
+│   │   └── lib
+│   ├── @babel
+│   │   ├── code-frame
+│   │   ├── compat-data
+│   │   ├── core
+│   │   ├── generator
+│   │   ├── helper-compilation-targets
+│   │   ├── helper-environment-visitor
+│   │   ├── helper-function-name
+│   │   ├── helper-hoist-variables
+│   │   ├── helper-module-imports
+│   │   ├── helper-module-transforms
+│   │   ├── helper-plugin-utils
+│   │   ├── helpers
+│   │   ├── helper-simple-access
+│   │   ├── helper-split-export-declaration
+│   │   ├── helper-string-parser
+│   │   ├── helper-validator-identifier
+│   │   ├── helper-validator-option
+│   │   ├── highlight
+│   │   ├── parser
+│   │   ├── plugin-syntax-async-generators
+│   │   ├── plugin-syntax-bigint
+│   │   ├── plugin-syntax-class-properties
+│   │   ├── plugin-syntax-import-meta
+│   │   ├── plugin-syntax-json-strings
+│   │   ├── plugin-syntax-jsx
+│   │   ├── plugin-syntax-logical-assignment-operators
+│   │   ├── plugin-syntax-nullish-coalescing-operator
+│   │   ├── plugin-syntax-numeric-separator
+│   │   ├── plugin-syntax-object-rest-spread
+│   │   ├── plugin-syntax-optional-catch-binding
+│   │   ├── plugin-syntax-optional-chaining
+│   │   ├── plugin-syntax-top-level-await
+│   │   ├── plugin-syntax-typescript
+│   │   ├── template
+│   │   ├── traverse
+│   │   └── types
+│   ├── babel-jest
+│   │   └── build
+│   ├── babel-plugin-istanbul
+│   │   ├── lib
+│   │   └── node_modules
+│   ├── babel-plugin-jest-hoist
+│   │   └── build
+│   ├── babel-preset-current-node-syntax
+│   │   ├── scripts
+│   │   └── src
+│   ├── babel-preset-jest
+│   ├── balanced-match
+│   ├── @bcoe
+│   │   └── v8-coverage
+│   ├── bluebird
+│   │   └── js
+│   ├── brace-expansion
+│   ├── braces
+│   │   └── lib
+│   ├── browserslist
+│   ├── bser
+│   ├── buffer-from
+│   ├── buffer-writer
+│   │   └── test
+│   ├── cache-point
+│   │   └── node_modules
+│   ├── callsites
+│   ├── camelcase
+│   ├── caniuse-lite
+│   │   ├── data
+│   │   └── dist
+│   ├── catharsis
+│   │   ├── bin
+│   │   ├── lib
+│   │   └── res
+│   ├── chalk
+│   │   └── source
+│   ├── char-regex
+│   ├── ci-info
+│   ├── cjs-module-lexer
+│   │   └── dist
+│   ├── cliui
+│   │   └── build
+│   ├── co
+│   ├── collect-all
+│   │   ├── example
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   └── test
+│   ├── collect-v8-coverage
+│   ├── color-convert
+│   ├── color-name
+│   ├── combined-stream
+│   │   └── lib
+│   ├── command-line-args
+│   │   ├── dist
+│   │   ├── lib
+│   │   └── node_modules
+│   ├── command-line-tool
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   ├── node_modules
+│   │   └── test
+│   ├── command-line-usage
+│   │   ├── lib
+│   │   └── node_modules
+│   ├── common-sequence
+│   │   └── dist
+│   ├── concat-map
+│   │   ├── example
+│   │   └── test
+│   ├── config-master
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   ├── node_modules
+│   │   └── test
+│   ├── convert-source-map
+│   ├── create-jest
+│   │   ├── bin
+│   │   └── build
+│   ├── cross-spawn
+│   │   └── lib
+│   ├── debug
+│   │   └── src
+│   ├── dedent
+│   │   └── dist
+│   ├── deep-extend
+│   │   └── lib
+│   ├── deepmerge
+│   │   └── dist
+│   ├── delayed-stream
+│   │   └── lib
+│   ├── detect-newline
+│   ├── diff-sequences
+│   │   └── build
+│   ├── discord-api-types
+│   │   ├── gateway
+│   │   ├── payloads
+│   │   ├── rest
+│   │   ├── rpc
+│   │   ├── utils
+│   │   └── voice
+│   ├── @discordjs
+│   │   ├── builders
+│   │   ├── collection
+│   │   ├── formatters
+│   │   ├── rest
+│   │   ├── util
+│   │   └── ws
+│   ├── discord.js
+│   │   ├── src
+│   │   └── typings
+│   ├── dmd
+│   │   ├── helpers
+│   │   ├── lib
+│   │   └── partials
+│   ├── dotenv
+│   │   └── lib
+│   ├── electron-to-chromium
+│   ├── emittery
+│   ├── emoji-regex
+│   │   └── es2015
+│   ├── entities
+│   │   └── lib
+│   ├── error-ex
+│   ├── escalade
+│   │   ├── dist
+│   │   └── sync
+│   ├── escape-string-regexp
+│   ├── esprima
+│   │   ├── bin
+│   │   └── dist
+│   ├── execa
+│   │   └── lib
+│   ├── exit
+│   │   ├── lib
+│   │   └── test
+│   ├── expect
+│   │   └── build
+│   ├── fast-deep-equal
+│   │   └── es6
+│   ├── @fastify
+│   │   └── busboy
+│   ├── fast-json-stable-stringify
+│   │   ├── benchmark
+│   │   ├── example
+│   │   └── test
+│   ├── fb-watchman
+│   ├── file-set
+│   │   └── node_modules
+│   ├── fill-range
+│   ├── find-replace
+│   │   ├── dist
+│   │   └── node_modules
+│   ├── find-up
+│   ├── follow-redirects
+│   ├── form-data
+│   │   └── lib
+│   ├── fs.realpath
+│   ├── fs-then-native
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   ├── test
+│   │   └── tmp
+│   ├── function-bind
+│   │   └── test
+│   ├── gensync
+│   │   └── test
+│   ├── get-caller-file
+│   ├── get-package-type
+│   ├── get-stream
+│   ├── glob
+│   ├── globals
+│   ├── graceful-fs
+│   ├── handlebars
+│   │   ├── bin
+│   │   ├── dist
+│   │   ├── lib
+│   │   └── types
+│   ├── has-flag
+│   ├── hasown
+│   ├── html-escaper
+│   │   ├── cjs
+│   │   ├── esm
+│   │   └── test
+│   ├── human-signals
+│   │   └── build
+│   ├── import-local
+│   │   └── fixtures
+│   ├── imurmurhash
+│   ├── inflight
+│   ├── inherits
+│   ├── is-arrayish
+│   ├── is-core-module
+│   │   └── test
+│   ├── isexe
+│   │   └── test
+│   ├── is-fullwidth-code-point
+│   ├── is-generator-fn
+│   ├── is-number
+│   ├── is-stream
+│   ├── @istanbuljs
+│   │   ├── load-nyc-config
+│   │   └── schema
+│   ├── istanbul-lib-coverage
+│   │   └── lib
+│   ├── istanbul-lib-instrument
+│   │   ├── node_modules
+│   │   └── src
+│   ├── istanbul-lib-report
+│   │   └── lib
+│   ├── istanbul-lib-source-maps
+│   │   └── lib
+│   ├── istanbul-reports
+│   │   └── lib
+│   ├── @jest
+│   │   ├── console
+│   │   ├── core
+│   │   ├── environment
+│   │   ├── expect
+│   │   ├── expect-utils
+│   │   ├── fake-timers
+│   │   ├── globals
+│   │   ├── reporters
+│   │   ├── schemas
+│   │   ├── source-map
+│   │   ├── test-result
+│   │   ├── test-sequencer
+│   │   ├── transform
+│   │   └── types
+│   ├── jest
+│   │   ├── bin
+│   │   └── build
+│   ├── jest-changed-files
+│   │   └── build
+│   ├── jest-circus
+│   │   └── build
+│   ├── jest-cli
+│   │   ├── bin
+│   │   └── build
+│   ├── jest-config
+│   │   └── build
+│   ├── jest-diff
+│   │   └── build
+│   ├── jest-docblock
+│   │   └── build
+│   ├── jest-each
+│   │   └── build
+│   ├── jest-environment-node
+│   │   └── build
+│   ├── jest-get-type
+│   │   └── build
+│   ├── jest-haste-map
+│   │   └── build
+│   ├── jest-leak-detector
+│   │   └── build
+│   ├── jest-matcher-utils
+│   │   └── build
+│   ├── jest-message-util
+│   │   └── build
+│   ├── jest-mock
+│   │   └── build
+│   ├── jest-pnp-resolver
+│   ├── jest-regex-util
+│   │   └── build
+│   ├── jest-resolve
+│   │   └── build
+│   ├── jest-resolve-dependencies
+│   │   └── build
+│   ├── jest-runner
+│   │   └── build
+│   ├── jest-runtime
+│   │   └── build
+│   ├── jest-snapshot
+│   │   ├── build
+│   │   └── node_modules
+│   ├── jest-util
+│   │   └── build
+│   ├── jest-validate
+│   │   ├── build
+│   │   └── node_modules
+│   ├── jest-watcher
+│   │   └── build
+│   ├── jest-worker
+│   │   ├── build
+│   │   └── node_modules
+│   ├── @jridgewell
+│   │   ├── gen-mapping
+│   │   ├── resolve-uri
+│   │   ├── set-array
+│   │   ├── sourcemap-codec
+│   │   └── trace-mapping
+│   ├── js2xmlparser
+│   │   └── lib
+│   ├── @jsdoc
+│   │   └── salty
+│   ├── jsdoc
+│   │   ├── lib
+│   │   ├── plugins
+│   │   └── templates
+│   ├── jsdoc-api
+│   │   └── lib
+│   ├── jsdoc-parse
+│   │   └── lib
+│   ├── jsdoc-to-markdown
+│   │   ├── bin
+│   │   └── lib
+│   ├── jsesc
+│   │   ├── bin
+│   │   └── man
+│   ├── json5
+│   │   ├── dist
+│   │   └── lib
+│   ├── json-parse-even-better-errors
+│   ├── js-tokens
+│   ├── js-yaml
+│   │   ├── bin
+│   │   ├── dist
+│   │   └── lib
+│   ├── klaw
+│   │   └── src
+│   ├── kleur
+│   ├── leven
+│   ├── lines-and-columns
+│   │   └── build
+│   ├── linkify-it
+│   │   └── lib
+│   ├── locate-path
+│   ├── lodash
+│   │   └── fp
+│   ├── lodash.camelcase
+│   ├── lodash.omit
+│   ├── lodash.padend
+│   ├── lodash.snakecase
+│   ├── lru-cache
+│   ├── magic-bytes.js
+│   │   └── dist
+│   ├── make-dir
+│   │   └── node_modules
+│   ├── makeerror
+│   │   └── lib
+│   ├── markdown-it
+│   │   ├── bin
+│   │   ├── dist
+│   │   └── lib
+│   ├── markdown-it-anchor
+│   │   ├── dist
+│   │   └── types
+│   ├── marked
+│   │   ├── bin
+│   │   ├── lib
+│   │   ├── man
+│   │   └── src
+│   ├── mdurl
+│   ├── merge-stream
+│   ├── micromatch
+│   ├── mime-db
+│   ├── mime-types
+│   ├── mimic-fn
+│   ├── minimatch
+│   ├── minimist
+│   │   ├── example
+│   │   └── test
+│   ├── mkdirp
+│   │   ├── bin
+│   │   └── lib
+│   ├── mkdirp2
+│   │   ├── examples
+│   │   └── test
+│   ├── @mongodb-js
+│   ├── ms
+│   ├── natural-compare
+│   ├── neo-async
+│   ├── node-appwrite
+│   │   ├── docs
+│   │   └── lib
+│   ├── node-int64
+│   ├── node-releases
+│   │   └── data
+│   ├── normalize-path
+│   ├── npm-run-path
+│   ├── object-get
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   └── test
+│   ├── object-to-spawn-args
+│   ├── once
+│   ├── onetime
+│   ├── packet-reader
+│   │   └── test
+│   ├── parse-json
+│   ├── path-exists
+│   ├── path-is-absolute
+│   ├── path-key
+│   ├── path-parse
+│   ├── pg
+│   │   └── lib
+│   ├── pg-cloudflare
+│   │   ├── dist
+│   │   └── src
+│   ├── pg-connection-string
+│   ├── pg-format
+│   │   ├── lib
+│   │   └── test
+│   ├── pg-int8
+│   ├── pgpass
+│   │   └── lib
+│   ├── pg-pool
+│   │   └── test
+│   ├── pg-protocol
+│   │   ├── dist
+│   │   └── src
+│   ├── pg-types
+│   │   ├── lib
+│   │   └── test
+│   ├── picocolors
+│   ├── picomatch
+│   │   └── lib
+│   ├── pirates
+│   │   └── lib
+│   ├── pkg-dir
+│   ├── p-limit
+│   ├── p-locate
+│   │   └── node_modules
+│   ├── postgres-array
+│   ├── postgres-bytea
+│   ├── postgres-date
+│   ├── postgres-interval
+│   ├── pretty-format
+│   │   ├── build
+│   │   └── node_modules
+│   ├── prompts
+│   │   ├── dist
+│   │   └── lib
+│   ├── proxy-from-env
+│   ├── p-try
+│   ├── pure-rand
+│   │   └── lib
+│   ├── react-is
+│   │   ├── cjs
+│   │   └── umd
+│   ├── reduce-extract
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   ├── node_modules
+│   │   └── test
+│   ├── reduce-flatten
+│   │   └── dist
+│   ├── reduce-unique
+│   ├── reduce-without
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   ├── node_modules
+│   │   └── test
+│   ├── require-directory
+│   ├── requizzle
+│   │   └── lib
+│   ├── resolve
+│   │   ├── bin
+│   │   ├── example
+│   │   ├── lib
+│   │   └── test
+│   ├── resolve-cwd
+│   ├── resolve.exports
+│   │   └── dist
+│   ├── resolve-from
+│   ├── @sapphire
+│   │   ├── async-queue
+│   │   ├── shapeshift
+│   │   └── snowflake
+│   ├── semver
+│   │   └── bin
+│   ├── shebang-command
+│   ├── shebang-regex
+│   ├── signal-exit
+│   ├── @sinclair
+│   │   └── typebox
+│   ├── @sinonjs
+│   │   ├── commons
+│   │   └── fake-timers
+│   ├── sisteransi
+│   │   └── src
+│   ├── slash
+│   ├── sort-array
+│   │   ├── dist
+│   │   └── node_modules
+│   ├── source-map
+│   │   ├── dist
+│   │   └── lib
+│   ├── source-map-support
+│   ├── split2
+│   ├── sprintf-js
+│   │   ├── demo
+│   │   ├── dist
+│   │   ├── src
+│   │   └── test
+│   ├── stack-utils
+│   ├── stream-connect
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   ├── node_modules
+│   │   └── test
+│   ├── stream-via
+│   │   ├── example
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   └── test
+│   ├── string-length
+│   ├── string-width
+│   ├── strip-ansi
+│   ├── strip-bom
+│   ├── strip-final-newline
+│   ├── strip-json-comments
+│   ├── supports-color
+│   ├── supports-preserve-symlinks-flag
+│   │   └── test
+│   ├── table-layout
+│   │   ├── lib
+│   │   └── node_modules
+│   ├── temp-path
+│   ├── test-exclude
+│   ├── test-value
+│   │   └── node_modules
+│   ├── tmpl
+│   │   └── lib
+│   ├── to-fast-properties
+│   ├── to-regex-range
+│   ├── tslib
+│   │   └── modules
+│   ├── ts-mixer
+│   │   └── dist
+│   ├── type-detect
+│   ├── type-fest
+│   │   ├── source
+│   │   └── ts41
+│   ├── @types
+│   │   ├── babel__core
+│   │   ├── babel__generator
+│   │   ├── babel__template
+│   │   ├── babel__traverse
+│   │   ├── graceful-fs
+│   │   ├── istanbul-lib-coverage
+│   │   ├── istanbul-lib-report
+│   │   ├── istanbul-reports
+│   │   ├── linkify-it
+│   │   ├── markdown-it
+│   │   ├── mdurl
+│   │   ├── node
+│   │   ├── stack-utils
+│   │   ├── ws
+│   │   ├── yargs
+│   │   └── yargs-parser
+│   ├── typical
+│   │   ├── jsdoc2md
+│   │   ├── lib
+│   │   └── test
+│   ├── uc.micro
+│   │   ├── categories
+│   │   └── properties
+│   ├── uglify-js
+│   │   ├── bin
+│   │   ├── lib
+│   │   └── tools
+│   ├── underscore
+│   │   ├── amd
+│   │   ├── cjs
+│   │   └── modules
+│   ├── undici
+│   │   ├── docs
+│   │   ├── lib
+│   │   └── types
+│   ├── undici-types
+│   ├── update-browserslist-db
+│   ├── uuid
+│   │   └── dist
+│   ├── v8-to-istanbul
+│   │   └── lib
+│   ├── @vladfrangu
+│   │   └── async_event_emitter
+│   ├── walk-back
+│   ├── walker
+│   │   └── lib
+│   ├── which
+│   │   └── bin
+│   ├── wordwrap
+│   │   ├── example
+│   │   └── test
+│   ├── wordwrapjs
+│   │   ├── jsdoc2md
+│   │   └── node_modules
+│   ├── wrap-ansi
+│   ├── wrappy
+│   ├── write-file-atomic
+│   │   └── lib
+│   ├── ws
+│   │   └── lib
+│   ├── xmlcreate
+│   │   └── lib
+│   ├── xtend
+│   ├── y18n
+│   │   └── build
+│   ├── yallist
+│   ├── yargs
+│   │   ├── build
+│   │   ├── helpers
+│   │   ├── lib
+│   │   └── locales
+│   ├── yargs-parser
+│   │   └── build
+│   └── yocto-queue
+└── src
+    ├── commands
+    │   └── giveways
+    ├── config
+    ├── events
+    ├── helpers
+    ├── models
+    ├── tests
+    └── utils
+
+681 directories
